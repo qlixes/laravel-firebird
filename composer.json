@@ -27,7 +27,7 @@
     "autoload":{
         "psr-0": {
             "Firebird\\": "src/"
-        }
+        },
         "psr-4": {
             "Firebird\\": "src/"
         }
