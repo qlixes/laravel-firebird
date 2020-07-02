@@ -71,13 +71,13 @@ class FirebirdGrammar extends Grammar
 
         $sql .= ' TABLE ' . $this->wrapTable($blueprint) . " ($columns)";
 
-        if ($blueprint->temporary) {
-            if ($blueprint->preserve) {
-                $sql .= ' ON COMMIT DELETE ROWS';
-            } else {
-                $sql .= ' ON COMMIT PRESERVE ROWS';
-            }
-        }
+        // if ($blueprint->temporary) {
+        //     if ($blueprint->preserve) {
+        //         $sql .= ' ON COMMIT DELETE ROWS';
+        //     } else {
+        //         $sql .= ' ON COMMIT PRESERVE ROWS';
+        //     }
+        // }
 
         return $sql;
     }
