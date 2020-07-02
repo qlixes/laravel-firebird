@@ -1,5 +1,5 @@
 {
-    "name": "alex153490/laravel-firebird",
+    "name": "qlixes/laravel-firebird",
     "description": "A Firebird database package for the Laravel Framework",
     "license": "MIT",
     "version": "1.0.3",
@@ -16,13 +16,20 @@
     "prefer-stable": true,
     "minimum-stability": "dev",
     "require": {
-        "php": "^7",
+        "php": "^7.2",
         "ext-pdo": "*",
-        "illuminate/support": "^6.0.*",
-        "illuminate/container": "^6.0.*",
-        "illuminate/database": "^6.0.*",
-        "illuminate/events": "^6.0.*",
+        "illuminate/support": "^6.0|^7.0",
+        "illuminate/container": "^6.0|^7.0",
+        "illuminate/database": "^6.0|^7.0",
+        "illuminate/events": "^6.0|^7.0",
         "doctrine/instantiator": "~1.0.3"
+    },
+    "extra": {
+      "laravel": {
+        "providers": [
+          "Firebird\\FirebirdServiceProvider"
+        ]
+      }
     },
     "autoload":{
         "psr-0": {

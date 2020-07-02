@@ -73,4 +73,14 @@ class Builder extends BaseBuilder
         return $this->processor->processExecuteFunction($this, $sql, $values);
     }
 
+    /**
+     * Determine if any rows exist for the current query.
+     *
+     * @return bool
+     */
+    public function exists()
+    {
+        return parent::count() > 0;
+    }
+
 }
