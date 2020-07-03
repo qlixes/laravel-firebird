@@ -3,6 +3,7 @@
 namespace Firebird\Schema\Grammars;
 
 use Firebird\Schema\SequenceBlueprint;
+use Illuminate\Database\Connection;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Grammars\Grammar;
 use Illuminate\Support\Fluent;
@@ -61,9 +62,10 @@ class FirebirdGrammar extends Grammar
      *
      * @param \Illuminate\Database\Schema\Blueprint $blueprint
      * @param \Illuminate\Support\Fluent $command
+     * @param \Illuminate\Database\Connection $connection
      * @return string
      */
-    public function compileCreate(Blueprint $blueprint, Fluent $command)
+    public function compileCreate(Blueprint $blueprint, Fluent $command, Connection $connection)
     {
         $columns = implode(', ', $this->getColumns($blueprint));
 
