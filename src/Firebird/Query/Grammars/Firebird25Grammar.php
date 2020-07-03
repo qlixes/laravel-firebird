@@ -202,7 +202,7 @@ class Firebird25Grammar extends Grammar
      * @param array $values
      * @return string
      */
-    protected function compileUpdateColumns($values)
+    protected function compileUpdateColumns(Builder $query, array $values)
     {
         $columns = [];
 
