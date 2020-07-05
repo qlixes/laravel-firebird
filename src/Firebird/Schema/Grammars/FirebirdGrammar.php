@@ -69,7 +69,7 @@ class FirebirdGrammar extends Grammar
     {
         $columns = implode(', ', $this->getColumns($blueprint));
 
-        $sql = $blueprint->temporary ? 'CREATE TEMPORARY' : 'CREATE';
+        $sql = $blueprint->temporary ? 'RECREATE TEMPORARY' : 'RECREATE';
 
         $sql .= ' TABLE ' . $this->wrapTable($blueprint) . " ($columns)";
 
@@ -618,7 +618,7 @@ class FirebirdGrammar extends Grammar
      */
     public function compileCreateSequence(SequenceBlueprint $blueprint, Fluent $command)
     {
-        $sql = 'CREATE SEQUENCE ';
+        $sql = 'RECREATE SEQUENCE ';
         $sql .= $this->wrapSequence($blueprint);
         if ($blueprint->getInitialValue() !== 0) {
             $sql .= ' START WITH ' . $blueprint->getInitialValue();
