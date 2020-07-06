@@ -131,13 +131,13 @@ class Builder extends BaseBuilder
      */
     public function dropAllTables()
     {
-        $this->disableForeignKeyConstraints();
+        $this->connection->statement(
+            $this->grammar->compileDropAllForeignKey()
+        );
 
         $this->connection->statement(
             $this->grammar->compileDropAllTables()
         );
-
-        $this->enableForeignKeyConstraints();
     }
 
 }

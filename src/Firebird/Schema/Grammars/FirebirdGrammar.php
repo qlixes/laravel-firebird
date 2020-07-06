@@ -687,6 +687,25 @@ class FirebirdGrammar extends Grammar
     }
 
     /**
+     * Compile the SQL needed to drop all tables.
+     *
+     * @param  array  $tables
+     * @return string
+     */
+    public function compileDropAllForeignKey()
+    {
+        $sql = 'EXECUTE BLOCK' . "\n";
+        $sql .= 'AS' . "\n";
+        $sql .= 'DECLARE stmt VARCHAR(100); ' . "\n"; 
+        $sql .= 'BEGIN' . "\n";
+        $sql .= "  FOR 'alter table ' || r.RDB$RELATION_NAME || ' DROP CONSTRAINT ' || r.RDB$CONSTRAINT_NAME || ';'  FROM RDB$RELATION_CONSTRAINTS r " . "\n";
+        $sql .= "  WHERE (r.RDB$CONSTRAINT_TYPE = 'FOREIGN KEY') " . "\n";
+        $sql .= "  INTO :stmt DO 'begin suspend;' " . "\n";
+        $sql .= "EXECUTE statement :tbl ; 'end;'" . "\n";
+        $sql .= 'END';
+        return $sql;
+    }
+    /**
      * Compile a create trigger for support autoincrement.
      *
      * @param \Illuminate\Database\Schema\Blueprint $blueprint
