@@ -701,7 +701,7 @@ class FirebirdGrammar extends Grammar
         $sql .= "  FOR SELECT 'alter table ' || r.RDB$RELATION_NAME || ' DROP CONSTRAINT ' || r.RDB$CONSTRAINT_NAME || ';'  FROM RDB$RELATION_CONSTRAINTS r " . "\n";
         $sql .= "  WHERE (r.RDB$CONSTRAINT_TYPE = 'FOREIGN KEY') " . "\n";
         $sql .= "  INTO :stmt DO 'begin suspend;' " . "\n";
-        $sql .= "EXECUTE statement :tbl ; 'end;'" . "\n";
+        $sql .= "EXECUTE statement :stmt ; 'end;'" . "\n";
         $sql .= 'END';
         return $sql;
     }
