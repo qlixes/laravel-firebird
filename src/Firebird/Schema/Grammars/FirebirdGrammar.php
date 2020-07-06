@@ -618,7 +618,7 @@ class FirebirdGrammar extends Grammar
      */
     public function compileCreateSequence(SequenceBlueprint $blueprint, Fluent $command)
     {
-        $sql = 'RECREATE SEQUENCE ';
+        $sql = 'CREATE SEQUENCE ';
         $sql .= $this->wrapSequence($blueprint);
         if ($blueprint->getInitialValue() !== 0) {
             $sql .= ' START WITH ' . $blueprint->getInitialValue();
@@ -641,7 +641,7 @@ class FirebirdGrammar extends Grammar
 
         $sequence = $this->wrap(substr('seq_' . $blueprint->getTable(), 0, 31));
 
-        return "CREATE SEQUENCE {$sequence}";
+        return "RECREATE SEQUENCE {$sequence}";
     }
 
     /**
