@@ -677,9 +677,9 @@ class FirebirdGrammar extends Grammar
         $sql .= 'AS' . "\n";
         $sql .= 'DECLARE tbl VARCHAR(50); ' . "\n"; 
         $sql .= 'BEGIN' . "\n";
-        $sql .= "  FOR select r.RDB$RELATION_NAME from RDB$RELATION_FIELDS r " . "\n";
-        $sql .= "  WHERE ((r.RDB$SYSTEM_FLAG IS NULL) OR (r.RDB$SYSTEM_FLAG = 0)) " . "\n";
-        $sql .= "  GROUP BY r.RDB$RELATION_NAME " . "\n";
+        $sql .= "  FOR select r.RDB\$RELATION_NAME from RDB\$RELATION_FIELDS r " . "\n";
+        $sql .= "  WHERE ((r.RDB\$SYSTEM_FLAG IS NULL) OR (r.RDB\$SYSTEM_FLAG = 0)) " . "\n";
+        $sql .= "  GROUP BY r.RDB\$RELATION_NAME " . "\n";
         $sql .= "  INTO :tbl DO " . "\n";
         $sql .= "EXECUTE statement 'drop table ' || :tbl ;" . "\n";
         $sql .= 'END';
@@ -698,8 +698,8 @@ class FirebirdGrammar extends Grammar
         $sql .= 'AS' . "\n";
         $sql .= 'DECLARE stmt VARCHAR(100); ' . "\n"; 
         $sql .= 'BEGIN' . "\n";
-        $sql .= "  FOR SELECT 'alter table ' || r.RDB$RELATION_NAME || ' DROP CONSTRAINT ' || r.RDB$CONSTRAINT_NAME || ';'  FROM RDB$RELATION_CONSTRAINTS r " . "\n";
-        $sql .= "  WHERE (r.RDB$CONSTRAINT_TYPE = 'FOREIGN KEY') " . "\n";
+        $sql .= "  FOR SELECT 'alter table ' || r.RDB\$RELATION_NAME || ' DROP CONSTRAINT ' || r.RDB\$CONSTRAINT_NAME || ';'  FROM RDB\$RELATION_CONSTRAINTS r " . "\n";
+        $sql .= "  WHERE (r.RDB\$CONSTRAINT_TYPE = 'FOREIGN KEY') " . "\n";
         $sql .= "  INTO :stmt DO 'begin suspend;' " . "\n";
         $sql .= "EXECUTE statement :stmt ; 'end;'" . "\n";
         $sql .= 'END';
