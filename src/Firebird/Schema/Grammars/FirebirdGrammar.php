@@ -666,6 +666,27 @@ class FirebirdGrammar extends Grammar
     }
 
     /**
+     * Compile the SQL needed to drop all tables.
+     *
+     * @param  array  $tables
+     * @return string
+     */
+    public function compileDropAllTables()
+    {
+        $sql = 'EXECUTE BLOCK' . "\n";
+        $sql .= 'AS' . "\n";
+        $sql .= 'DECLARE tbl VARCHAR(50); ' . "\n"; 
+        $sql .= 'BEGIN' . "\n";
+        $sql .= "  FOR select r.RDB$RELATION_NAME from RDB$RELATION_FIELDS r " . "\n";
+        $sql .= "  WHERE ((r.RDB$SYSTEM_FLAG IS NULL) OR (r.RDB$SYSTEM_FLAG = 0)) " . "\n";
+        $sql .= "  GROUP BY r.RDB$RELATION_NAME " . "\n";
+        $sql .= "  INTO :tbl DO " . "\n";
+        $sql .= "EXECUTE statement 'drop table ' || :tbl ;" . "\n";
+        $sql .= 'END';
+        return $sql;
+    }
+
+    /**
      * Compile a create trigger for support autoincrement.
      *
      * @param \Illuminate\Database\Schema\Blueprint $blueprint
