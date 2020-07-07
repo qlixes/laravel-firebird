@@ -131,9 +131,23 @@ class Builder extends BaseBuilder
      */
     public function dropAllTables()
     {
-        $this->connection->statement(
-            $this->grammar->compileDropAllTables()
-        );
+        $tables = [];
+
+        foreach ($this->getAllTables() as $row) {
+
+            $this->connection->statement(
+                $this->grammar->compileDropForeign()
+            );
+
+            $this->connection->statement(
+                $this->grammar->compileDrop()
+            );
+
+        }
+
+        if (empty($tables)) {
+            return;
+        }
     }
 
 }

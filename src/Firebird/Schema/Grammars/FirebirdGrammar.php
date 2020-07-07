@@ -677,17 +677,17 @@ class FirebirdGrammar extends Grammar
         $sql .= 'AS' . "\n";
         $sql .= 'DECLARE tbl VARCHAR(50); ' . "\n"; 
         $sql .= 'BEGIN' . "\n";
-        $sql .= "  FOR select r.RDB\$RELATION_NAME from RDB\$RELATION_FIELDS r " . "\n";
-        $sql .= "  WHERE ((r.RDB\$SYSTEM_FLAG IS NULL) OR (r.RDB\$SYSTEM_FLAG = 0)) " . "\n";
-        $sql .= "  GROUP BY r.RDB\$RELATION_NAME " . "\n";
-        $sql .= "  INTO :tbl DO " . "\n";
-        $sql .= "EXECUTE statement 'drop table ' || :tbl ;" . "\n";
+        $sql .= "  FOR SELECT r.RDB\$RELATION_NAME from RDB\$RELATION_FIELDS r " . "\n";
+        $sql .= "    WHERE ((r.RDB\$SYSTEM_FLAG IS NULL) OR (r.RDB\$SYSTEM_FLAG = 0)) " . "\n";
+        $sql .= "    GROUP BY r.RDB\$RELATION_NAME " . "\n";
+        $sql .= "    INTO :tbl DO " . "\n";
+        $sql .= "    EXECUTE STATEMENT 'drop table ' || :tbl ;" . "\n";
         $sql .= 'END';
         return $sql;
     }
 
     /**
-     * Compile the SQL needed to drop all tables.
+     * Compile the SQL needed to drop all foreign key.
      *
      * @param  array  $tables
      * @return string
@@ -699,12 +699,13 @@ class FirebirdGrammar extends Grammar
         $sql .= 'DECLARE stmt VARCHAR(100); ' . "\n"; 
         $sql .= 'BEGIN' . "\n";
         $sql .= "  FOR SELECT 'alter table ' || r.RDB\$RELATION_NAME || ' DROP CONSTRAINT ' || r.RDB\$CONSTRAINT_NAME || ';'  FROM RDB\$RELATION_CONSTRAINTS r " . "\n";
-        $sql .= "  WHERE (r.RDB\$CONSTRAINT_TYPE = 'FOREIGN KEY') " . "\n";
-        $sql .= "  INTO :stmt DO 'begin suspend;' " . "\n";
-        $sql .= "EXECUTE statement :stmt ; 'end;'" . "\n";
+        $sql .= "    WHERE (r.RDB\$CONSTRAINT_TYPE = 'FOREIGN KEY') " . "\n";
+        $sql .= "    INTO :stmt DO 'begin suspend;' " . "\n";
+        $sql .= "    EXECUTE STATEMENT :stmt ; 'end;'" . "\n";
         $sql .= 'END';
         return $sql;
     }
+    
     /**
      * Compile a create trigger for support autoincrement.
      *
